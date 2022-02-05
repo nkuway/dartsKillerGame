@@ -1,0 +1,158 @@
+@import "reset";
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    background: rgb(45, 50, 73);
+    background: linear-gradient(90deg, rgba(45, 50, 73, 1) 0%, rgba(46, 48, 63, 1) 100%);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Abel', sans-serif;
+    text-transform: uppercase;
+}
+
+.wrapper {
+    max-width: 850px;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin: auto;
+}
+
+.players-wrapper {
+
+    h2 {
+        margin-top: 50px;
+        margin-bottom: 15px;
+        color: #ffffff;
+        font-size: 35px;
+    }
+
+    #players {
+        display: flex;
+        flex-direction: column;
+
+        .player {
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 25px;
+            margin-bottom: 15px;
+            margin-right: 60px;
+            background: #20232d;
+            box-shadow: 0 5px 5px #282a3a;
+            border-radius: 5px;
+
+            &--is-killer {
+                background: red;
+            }
+
+            &--is-dead {
+                background-image: url("../img/blood-spatter.png");
+                background-size: cover;
+                background-position: right;
+
+                .player__number {
+                    font-size: 0;
+
+                    &:after {
+                        content: '\f54c';
+                        font-family: 'Font Awesome 5 Free';
+                        font-weight: 900;
+                        font-size: 30px;
+                    }
+                }
+            }
+
+            button {
+                border: none;
+                padding: 0;
+                box-shadow: none;
+                cursor: pointer;
+            }
+
+            &__name {
+                display: inline-block;
+                font-family: 'Abel', sans-serif;
+                text-transform: uppercase;
+                color: #d2bc10;
+                font-size: 30px;
+                margin-right: 15px;
+            }
+
+            &__number {
+                color: #ffffff;
+                font-size: 30px;
+                font-family: "Abel", sans-serif;
+                display: inline-flex;
+                width: 50px;
+                height: 50px;
+                background: #2657ca;
+                border-radius: 50%;
+                justify-content: center;
+                align-items: center;
+            }
+
+            &__points {
+                color: #ffffff;
+                font-size: 30px;
+                font-family: "Abel", sans-serif;
+                display: inline-flex;
+                width: 50px;
+                height: 50px;
+                background: #2657ca;
+                border-radius: 50%;
+                justify-content: center;
+                align-items: center;
+
+                &--increment-btn {
+                    margin-left: auto;
+                    margin-right: 20px;
+                    color: #ffffff;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 25px;
+                    height: 25px;
+                    border-radius: 50%;
+                    background: #23cc12;
+                    font-size: 35px;
+
+                    i {
+                        pointer-events: none;
+                    }
+                }
+
+                &--decrement-btn {
+                    margin-right: 20px;
+                    color: #ffffff;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 25px;
+                    height: 25px;
+                    border-radius: 50%;
+                    background: #23cc12;
+                    font-size: 35px;
+
+                    i {
+                        pointer-events: none;
+                    }
+                }
+            }
+
+            &__delete-btn {
+                font-size: 30px;
+                position: absolute;
+                top: 50%;
+                right: -50px;
+                transform: translateY(-50%);
+                color: #c6c6c6;
+                background: none;
+
+                i {
+                    pointer-events: none;
+                }
+            }
+        }
+    }
+}
