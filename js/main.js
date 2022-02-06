@@ -68,15 +68,20 @@ document.addEventListener('DOMContentLoaded', (event) => {
         if (!input.value.trim().length) {
 
             //todo: add error handling for empty player name
-            console.log('name is empty')
+            alert('Player name is empty');
             return;
+        }
+
+        // remove missing players error
+        if (document.querySelector('.error--missing-players')) {
+            document.querySelector('.error--missing-players').remove();
         }
 
         // if clone values array is not empty
         if (cloneValues.length > 0) {
 
             // create player obj
-            let player = new Player(input.value, 0, 1, false, false);
+            let player = new Player(input.value, 0, 1, false);
 
             // set player random number
             player.number = cloneValues[0].single;
@@ -85,39 +90,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             playersArr.push(player);
             cloneValues.splice(0, 1);
 
-            // create player tags
-            let playerWrapper = document.createElement('div');
-            let playerName = document.createElement('span');
-            let playerNumber = document.createElement('span');
-            let playerDeleteBtn = document.createElement('button');
-            let playerPoints = document.createElement('span');
-            let playerIncrementBtn = document.createElement('button');
-            let playerDecrementBtn = document.createElement('button');
-
-            // add player css classes
-            playerWrapper.classList.add('player');
-            playerWrapper.id = player.number;
-            playerName.classList.add('player__name');
-            playerNumber.classList.add('player__number');
-            playerDeleteBtn.classList.add('player__delete-btn');
-            playerPoints.classList.add('player__points');
-            playerIncrementBtn.classList.add('player__points--increment-btn');
-            playerDecrementBtn.classList.add('player__points--decrement-btn');
-
-            // add player meta
-            playerName.innerHTML = player._name;
-            playerNumber.innerHTML = player._number;
-            playerDeleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
-            playerDeleteBtn.dataset.target = player._number;
-            playerPoints.innerHTML = player.points;
-            playerIncrementBtn.innerHTML = '<i class="fas fa-plus-circle"></i>';
-            playerIncrementBtn.dataset.target = player._number;
-            playerDecrementBtn.innerHTML = '<i class="fas fa-minus-circle"></i>';
-            playerDecrementBtn.dataset.target = player._number;
-
-            // render
-            playerWrapper.append(playerName, playerNumber, playerIncrementBtn, playerDecrementBtn, playerPoints, playerDeleteBtn);
-            players.append(playerWrapper);
+            renderPlayerToDom(player);
 
             // save players to sessionStorage
             sessionStorage.setItem('players', JSON.stringify(playersArr));
@@ -149,8 +122,57 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
             // remove from DOM
             document.getElementById(e.target.dataset.target).remove();
+
+            // save players to sessionStorage
+            sessionStorage.setItem('players', JSON.stringify(playersArr));
         }
     });
+
+    function renderPlayerToDom(player) {
+
+        // create player tags
+        let playerWrapper = document.createElement('div');
+        let playerName = document.createElement('span');
+        let playerNumber = document.createElement('span');
+        let playerDeleteBtn = document.createElement('button');
+        let playerPoints = document.createElement('span');
+        let playerIncrementBtn = document.createElement('button');
+        let playerDecrementBtn = document.createElement('button');
+
+        // add correct css classes on load
+        if (player._points === 5) {
+            playerWrapper.classList.add('player--is-killer');
+            playerIncrementBtn.disabled = true;
+        } else if (player._points === 0) {
+            playerWrapper.classList.add('player--is-dead');
+            playerDecrementBtn.disabled = true;
+        }
+
+        // add player css classes
+        playerWrapper.classList.add('player');
+        playerWrapper.id = player._number;
+        playerName.classList.add('player__name');
+        playerNumber.classList.add('player__number');
+        playerDeleteBtn.classList.add('player__delete-btn');
+        playerPoints.classList.add('player__points');
+        playerIncrementBtn.classList.add('player__points--increment-btn');
+        playerDecrementBtn.classList.add('player__points--decrement-btn');
+
+        // add player meta
+        playerName.innerHTML = player._name;
+        playerNumber.innerHTML = player._number;
+        playerDeleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i>';
+        playerDeleteBtn.dataset.target = player._number;
+        playerPoints.innerHTML = player._points;
+        playerIncrementBtn.innerHTML = '<i class="fas fa-plus-circle"></i>';
+        playerIncrementBtn.dataset.target = player._number;
+        playerDecrementBtn.innerHTML = '<i class="fas fa-minus-circle"></i>';
+        playerDecrementBtn.dataset.target = player._number;
+
+        // render
+        playerWrapper.append(playerName, playerNumber, playerIncrementBtn, playerDecrementBtn, playerPoints, playerDeleteBtn);
+        players.append(playerWrapper);
+    }
 
     /*
      * Score / points
@@ -170,8 +192,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
             // update player points in DOM
             pointsElement.innerHTML = (playerPoints + 1).toString();
-
-            // todo: disabled increment button if player points equals 5
 
             // decrement player points
         } else if (e.target.classList.contains('player__points--decrement-btn')) {
@@ -207,7 +227,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     playerEl.classList.add('player--is-killer');
                     playerEl.querySelector('.player__points--increment-btn').disabled = true;
                 } else {
-                    playersArr[index]._killer = true;
+                    playersArr[index]._killer = false;
                     playerEl.classList.remove('player--is-killer');
                     playerEl.querySelector('.player__points--increment-btn').disabled = false;
                 }
@@ -221,27 +241,30 @@ document.addEventListener('DOMContentLoaded', (event) => {
             }
         });
 
-        console.log(playersArr)
+        sessionStorage.setItem('players', JSON.stringify(playersArr));
     }
 
-    // todo: reset game on button click
-
-
-    // todo: load data from sessionStorage
     /*
      * Load SessionStorage values
      * @desc: render values if stored
      */
     if (sessionStorage['players']) {
         let sessionPlayers = JSON.parse(sessionStorage.getItem('players'));
-        console.log('players in session:', sessionPlayers)
-        sessionPlayers.forEach((player) => {
-            let playerName = document.createElement('li');
-            playerName.innerHTML = player._name;
-            players.append(playerName);
-        });
-    } else {
-        players.innerHTML = '<li>Er zijn nog geen spelers aangemaakt</li>';
+
+        if (sessionPlayers.length > 0) {
+            sessionPlayers.forEach((player) => {
+
+                // fill playersArr on load
+                playersArr.push(player);
+
+                // render player to DOM
+                renderPlayerToDom(player);
+            });
+        } else {
+            players.innerHTML = '<p class="error error--missing-players">Add players to play</p>';
+        }
     }
 
+    // todo: reset game on button click
+    // todo: add player score
 });
