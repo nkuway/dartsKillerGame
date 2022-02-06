@@ -261,8 +261,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 renderPlayerToDom(player);
             });
         } else {
-            players.innerHTML = '<p class="error error--missing-players">Add players to play</p>';
+            players.innerHTML = '<p class="error error--missing-players"><i class="fas fa-exclamation-triangle"></i> Add players to play</p>';
         }
+    }  else {
+        players.innerHTML = '<p class="error error--missing-players"><i class="fas fa-exclamation-triangle"></i> Add players to play</p>';
     }
 
     // todo: reset game on button click
