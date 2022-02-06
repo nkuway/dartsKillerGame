@@ -1,12 +1,17 @@
 @import "reset";
 
+// todo: responsive
+
 body {
     font-family: 'Ubuntu', sans-serif;
     background: rgb(45, 50, 73);
     background: linear-gradient(90deg, rgba(45, 50, 73, 1) 0%, rgba(46, 48, 63, 1) 100%);
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6 {}
+
+i {
+    font-style: italic;
 }
 
 .wrapper {
@@ -24,6 +29,16 @@ h1, h2, h3, h4, h5, h6 {
 
     p {
         color: #ffffff;
+        line-height: 1.6;
+
+        &.intro {
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        &:last-child {
+            margin-top: 25px;
+        }
     }
 }
 

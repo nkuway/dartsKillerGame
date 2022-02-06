@@ -49,6 +49,10 @@ body {
   background: linear-gradient(90deg, #2d3249 0%, #2e303f 100%);
 }
 
+i {
+  font-style: italic;
+}
+
 .wrapper {
   max-width: 850px;
   padding-right: 15px;
@@ -63,6 +67,14 @@ body {
 }
 .wrapper p {
   color: #ffffff;
+  line-height: 1.6;
+}
+.wrapper p.intro {
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+.wrapper p:last-child {
+  margin-top: 25px;
 }
 
 .players-wrapper {
