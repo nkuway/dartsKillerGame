@@ -44,14 +44,9 @@ table {
 }
 
 body {
-  font-family: "Open Sans", sans-serif;
+  font-family: "Ubuntu", sans-serif;
   background: #2d3249;
   background: linear-gradient(90deg, #2d3249 0%, #2e303f 100%);
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: "Abel", sans-serif;
-  text-transform: uppercase;
 }
 
 .wrapper {
@@ -60,19 +55,81 @@ h1, h2, h3, h4, h5, h6 {
   padding-left: 15px;
   margin: auto;
 }
-
-.players-wrapper h2 {
+.wrapper h1 {
   margin-top: 50px;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
   color: #ffffff;
   font-size: 35px;
+}
+.wrapper p {
+  color: #ffffff;
+}
+
+.players-wrapper {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 50px;
+}
+.players-wrapper h2 {
+  color: #ffffff;
+  font-size: 35px;
+}
+.players-wrapper #playerForm {
+  margin-left: auto;
+  display: flex;
+}
+@media screen and (max-width: 767px) {
+  .players-wrapper #playerForm {
+    flex: 0 0 100%;
+    max-width: 100%;
+    margin-top: 25px;
+  }
+}
+.players-wrapper #playerForm input {
+  height: 25px;
+  width: 250px;
+  max-width: 100%;
+  font-family: "Ubuntu", sans-serif;
+  font-size: 20px;
+  border-top: 0;
+  border-right: 0;
+  border-bottom: 1px solid #ffffff;
+  border-left: 0;
+  background: none;
+  color: #ffffff;
+  padding: 5px 10px;
+  margin-right: 20px;
+}
+@media screen and (max-width: 767px) {
+  .players-wrapper #playerForm input {
+    flex-grow: 1;
+  }
+}
+.players-wrapper #playerForm button {
+  background: #393e57;
+  color: #ffffff;
+  border: none;
+  box-shadow: none;
+  border-radius: 10px;
+  font-family: "Ubuntu", sans-serif;
+  cursor: pointer;
+  padding: 5px 10px;
+  font-size: 20px;
+}
+.players-wrapper #playerForm button:hover {
+  background: #363b57;
 }
 .players-wrapper #players {
   display: flex;
   flex-direction: column;
+  flex: 0 0 100%;
+  max-width: 100%;
+  margin-top: 50px;
 }
 .players-wrapper #players .player {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   position: relative;
   padding: 25px;
@@ -82,13 +139,28 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 5px 5px #282a3a;
   border-radius: 5px;
 }
-.players-wrapper #players .player--is-killer {
-  background: red;
+.players-wrapper #players .player--is-killer .player__number {
+  background: #e13c31;
+}
+.players-wrapper #players .player--is-killer .player__number:before {
+  content: "";
+  display: block;
+  width: 20px;
+  height: 26px;
+  background-image: url(../img/fire.gif);
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: -20px;
+}
+.players-wrapper #players .player--is-killer .player__points {
+  background: #e13c31;
 }
 .players-wrapper #players .player--is-dead {
-  background-image: url("../img/blood-spatter.png");
-  background-size: cover;
-  background-position: right;
+  background-image: url("../img/BloodOverlay.png");
+  background-size: 100%;
+  background-position: bottom;
+  background-repeat: no-repeat;
 }
 .players-wrapper #players .player--is-dead .player__number {
   font-size: 0;
@@ -107,16 +179,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 .players-wrapper #players .player__name {
   display: inline-block;
-  font-family: "Abel", sans-serif;
-  text-transform: uppercase;
-  color: #d2bc10;
+  color: #ffffff;
   font-size: 30px;
   margin-right: 15px;
 }
 .players-wrapper #players .player__number {
+  position: relative;
   color: #ffffff;
   font-size: 30px;
-  font-family: "Abel", sans-serif;
   display: inline-flex;
   width: 50px;
   height: 50px;
@@ -124,11 +194,11 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 50%;
   justify-content: center;
   align-items: center;
+  transition: background 0.2s;
 }
 .players-wrapper #players .player__points {
   color: #ffffff;
   font-size: 30px;
-  font-family: "Abel", sans-serif;
   display: inline-flex;
   width: 50px;
   height: 50px;
@@ -136,6 +206,7 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 50%;
   justify-content: center;
   align-items: center;
+  transition: background 0.2s;
 }
 .players-wrapper #players .player__points--increment-btn {
   margin-left: auto;
@@ -144,11 +215,14 @@ h1, h2, h3, h4, h5, h6 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 25px;
-  height: 25px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  background: #23cc12;
-  font-size: 35px;
+  background: #393e57;
+  font-size: 40px;
+}
+.players-wrapper #players .player__points--increment-btn:disabled {
+  opacity: 0.5;
 }
 .players-wrapper #players .player__points--increment-btn i {
   pointer-events: none;
@@ -159,11 +233,14 @@ h1, h2, h3, h4, h5, h6 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 25px;
-  height: 25px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  background: #23cc12;
-  font-size: 35px;
+  background: #393e57;
+  font-size: 40px;
+}
+.players-wrapper #players .player__points--decrement-btn:disabled {
+  opacity: 0.5;
 }
 .players-wrapper #players .player__points--decrement-btn i {
   pointer-events: none;

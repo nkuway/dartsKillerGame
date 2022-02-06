@@ -17,7 +17,7 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Abel&family=Open+Sans&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
         <script src="https://kit.fontawesome.com/d5bec812f2.js" crossorigin="anonymous"></script>
 
         <link rel="stylesheet" href="css/app.css">
@@ -28,14 +28,13 @@
         <main>
             <div class="wrapper">
                 <h1>Killer</h1>
-                <div>
-                    <form id="playerForm">
-                        <input type="text" placeholder="naam">
-                        <button type="submit">Voeg speler toe</button>
-                    </form>
-                </div>
+                <p>A non standard game for playing darts</p>
                 <section class="players-wrapper">
-                    <h2>Spelers</h2>
+                    <h2>Players</h2>
+                    <form id="playerForm">
+                        <input type="text" placeholder="Name">
+                        <button type="submit">Add player <i class="fas fa-plus-circle" aria-hidden="true"></i></button>
+                    </form>
                     <div id="players"></div>
                 </section>
             </div>

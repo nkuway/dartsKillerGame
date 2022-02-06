@@ -119,9 +119,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
             playerWrapper.append(playerName, playerNumber, playerIncrementBtn, playerDecrementBtn, playerPoints, playerDeleteBtn);
             players.append(playerWrapper);
 
-            // todo: save players to sessionStorage
             // save players to sessionStorage
-            // sessionStorage.setItem('players', JSON.stringify(playersArr));
+            sessionStorage.setItem('players', JSON.stringify(playersArr));
 
         } else {
             submitBtn.setAttribute("disabled", "");
@@ -206,14 +205,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 if (playersArr[index]._points === 5) {
                     playersArr[index]._killer = true;
                     playerEl.classList.add('player--is-killer');
+                    playerEl.querySelector('.player__points--increment-btn').disabled = true;
                 } else {
                     playersArr[index]._killer = true;
                     playerEl.classList.remove('player--is-killer');
+                    playerEl.querySelector('.player__points--increment-btn').disabled = false;
                 }
                 if (playersArr[index]._points === 0) {
                     playerEl.classList.add('player--is-dead');
+                    playerEl.querySelector('.player__points--decrement-btn').disabled = true;
                 } else {
                     playerEl.classList.remove('player--is-dead');
+                    playerEl.querySelector('.player__points--decrement-btn').disabled = false;
                 }
             }
         });
@@ -229,16 +232,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
      * Load SessionStorage values
      * @desc: render values if stored
      */
-    // if (sessionStorage['players']) {
-    //     let sessionPlayers = JSON.parse(sessionStorage.getItem('players'));
-    //     console.log('players in session:', sessionPlayers)
-    //     // sessionPlayers.forEach((player) => {
-    //     //     let playerName = document.createElement('li');
-    //     //     playerName.innerHTML = player._name;
-    //     //     players.append(playerName);
-    //     // });
-    // } else {
-    //     players.innerHTML = '<li>Er zijn nog geen spelers aangemaakt</li>';
-    // }
+    if (sessionStorage['players']) {
+        let sessionPlayers = JSON.parse(sessionStorage.getItem('players'));
+        console.log('players in session:', sessionPlayers)
+        sessionPlayers.forEach((player) => {
+            let playerName = document.createElement('li');
+            playerName.innerHTML = player._name;
+            players.append(playerName);
+        });
+    } else {
+        players.innerHTML = '<li>Er zijn nog geen spelers aangemaakt</li>';
+    }
 
 });
